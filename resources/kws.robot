@@ -46,3 +46,8 @@ Então devo ver mensagens informando que os campos do cadastro de clientes são 
     wait Until Page Contains        CPF é obrigatório          5
     wait Until Page Contains        Endereço é obrigatório     5
     wait Until Page Contains        Telefone é obrigatório     5
+
+Então devo ver o texto 
+    [Arguments]         ${expect_text}
+
+    Wait Until Page Contains        ${expect_text}
