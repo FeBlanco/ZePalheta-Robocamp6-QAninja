@@ -19,7 +19,7 @@ Devo ver a área logada
 Devo ver um toaster com a mensagem
     [Arguments]         ${expect_message}
 
-    Wait Until Element Contains     ${TOASTER_ERROR}         ${expect_message}
+    Wait Until Element Contains     ${TOASTER_ERROR_P}         ${expect_message}
 
 # Customers
 
@@ -29,23 +29,37 @@ Dado que acesso o formulário de cadastro de clientes
     Wait Until Element Is Visible   ${CUSTOMERS_FORM}     5
     Click Element                   ${CUSTOMERS_FORM} 
 
-Quando faço a inclusão desse cliente:
-    [Arguments]     ${name}     ${cpf}      ${address}      ${phone_number}
+E que eu tenho o seguinte cliente:
+    [Arguments]                ${name}    ${cpf}      ${address}      ${phone_number}
 
-    Remove Customer Bye cpf     ${cpf}
+    Remove Customer By Cpf     ${cpf}
 
-    Register New Customers  ${name}     ${cpf}      ${address}      ${phone_number}
+    Set Test Variable          ${name}
+    Set Test Variable          ${cpf}
+    Set Test Variable          ${address}
+    Set Test Variable          ${phone_number}
+
+Mas esse cpf já existe no sistema
+    Insert Customer             ${name}     ${cpf}      ${address}      ${phone_number}
+
+Quando faço a inclusão desse cliente
+    Register New Customers      ${name}     ${cpf}      ${address}      ${phone_number}
 
 Então devo ver a notificação:
-    [Arguments]         ${expect_notice}
+    [Arguments]     ${expect_notice}
 
-    Wait Until Element Contains      ${TOASTER_SUCCESS}          ${expect_notice}
+    Wait Until Element Contains     ${TOASTER_SUCCESS}     ${expect_notice}      5
+
+Então devo ver a notificação de erro:
+    [Arguments]     ${expect_notice}
+
+    Wait Until Element Contains     ${TOASTER_ERROR}        ${expect_notice}      5
 
 Então devo ver mensagens informando que os campos do cadastro de clientes são obrigatórios
-    wait Until Page Contains        Nome é obrigatório         5
-    wait Until Page Contains        CPF é obrigatório          5
-    wait Until Page Contains        Endereço é obrigatório     5
-    wait Until Page Contains        Telefone é obrigatório     5
+    wait Until Element Contains        ${LABEL_NAME}            Nome é obrigatório         5
+    wait Until Element Contains        ${LABEL_CPF}             CPF é obrigatório          5
+    wait Until Element Contains        ${LABEL_ADDRES}          Endereço é obrigatório     5
+    wait Until Element Contains        ${LABEL_PHONE}           Telefone é obrigatório     5
 
 Então devo ver o texto 
     [Arguments]         ${expect_text}

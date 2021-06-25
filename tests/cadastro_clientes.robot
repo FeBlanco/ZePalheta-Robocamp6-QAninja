@@ -2,23 +2,32 @@
 Documentation           Cadastro de Clientes
 
 Resource        ../resources/base.robot
+Test Setup      Login Sesions
 
-Suite Setup      Login Sesions
-
-Suite Teardown   Finish Session
+Test Teardown   Finish Session
 
 
 ***Test Cases***
 Novo cliente
     Dado que acesso o formulário de cadastro de clientes
-    Quando faço a inclusão desse cliente:
-    ...             Bon Jovi        00000001406     Rua dos Bugs, 1000      11999999999
+    E que eu tenho o seguinte cliente:
+    ...         Bon Jovi        00000001406     Rua dos Bugs, 1000      11999999999
+    Quando faço a inclusão desse cliente
     Então devo ver a notificação:      Cliente cadastrado com sucesso!
+
+Cliente duplicado
+    Dado que acesso o formulário de cadastro de clientes
+    E que eu tenho o seguinte cliente:
+    ...        Adrian Smith        00000001407     Rua dos Bugs, 2000      11999999991
+    Mas esse cpf já existe no sistema   
+    Quando faço a inclusão desse cliente    
+    Então devo ver a notificação de erro:       Este CPF já existe no sistema!
 
 Campos Obrigatórios
     Dado que acesso o formulário de cadastro de clientes
-    Quando faço a inclusão desse cliente:
+    E que eu tenho o seguinte cliente:
     ...             ${EMPTY}        ${EMPTY}        ${EMPTY}        ${EMPTY}
+    Quando faço a inclusão desse cliente
     Então devo ver mensagens informando que os campos do cadastro de clientes são obrigatórios
 
 Nome Obrigatório
@@ -34,7 +43,7 @@ Cpf Obrigatório
 Endereço é Obrigatório
     [tags]       required
     [Template]      Validação de Campos
-    Felipe          45380725082     ${EMPTY}               11999999999       Endereço é obrigatório
+    Felipe          45380825082     ${EMPTY}               11999999999       Endereço é obrigatório
 
 Telefone é Obrigatório
     [tags]       required
@@ -43,18 +52,19 @@ Telefone é Obrigatório
 
 Telefone incorreto
     [Template]     Validação de Campos
-    Totti          45380726482      Rua dos Bugs, 1020    1199999999          Telefone inválido
+    Totti          45380726487      Rua dos Bugs, 1020    1199999999          Telefone inválido
 
 ***Keywords***
 Validação de Campos
     [Arguments]     ${nome}         ${cpf}          ${endereco}      ${telefone}        ${saida}
 
     Dado que acesso o formulário de cadastro de clientes
-    Quando faço a inclusão desse cliente:
+    E que eu tenho o seguinte cliente:
     ...             ${nome}         ${cpf}          ${endereco}      ${telefone}
+    Quando faço a inclusão desse cliente
     Então devo ver o texto          ${saida}
 
 
     # robot -d ./logs tests\cadastro_clientes.robot
-    # robot -d .\logs\ -i temp tests\
+    # robot -d .\logs\ -i dup tests\
     # robot -d .\logs\ -i required tests\
