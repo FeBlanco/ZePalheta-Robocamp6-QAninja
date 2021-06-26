@@ -3,7 +3,9 @@
 Library         SeleniumLibrary
 
 ***Keywords***
-#Login
+
+## Login
+
 Acesso a página Login
     Go To        ${base_url}   
     
@@ -24,8 +26,7 @@ Devo ver um toaster com a mensagem
 # Customers
 
 Dado que acesso o formulário de cadastro de clientes
-    Wait Until Element Is Visible   ${NAV_CUSTOMERS}      5
-    Click Element                   ${NAV_CUSTOMERS}
+    Go To customers
     Wait Until Element Is Visible   ${CUSTOMERS_FORM}     5
     Click Element                   ${CUSTOMERS_FORM} 
 
@@ -65,3 +66,32 @@ Então devo ver o texto
     [Arguments]         ${expect_text}
 
     Wait Until Page Contains        ${expect_text}
+
+E esse cliente deve ser exibibido na lista
+    ${cpf_formatado}=           Format Cpf          ${cpf}
+    Go Back
+    Wait Until Element Is Visible  ${CUSTOMERS_LIST}       5
+    Table Should Contain           ${CUSTOMERS_LIST}       ${cpf_formatado}
+
+## Remover Customer
+
+Dado que tenho um cliente indesejado:
+    [Arguments]         ${name}     ${cpf}      ${address}      ${phone_number}
+    Remove Customer By Cpf          ${cpf}
+    Insert Customer     ${name}     ${cpf}      ${address}      ${phone_number}
+
+    Set Test Variable   ${cpf}
+
+E acesso a lista de clientes
+    Go To customers
+
+Quando eu removo esse cliente
+#   Format Cpf é a KW que representa o método no arquivo db.py
+    ${cpf_formatado}=       Format Cpf      ${cpf}
+    Set Test Variable       ${cpf_formatado}
+
+    Go To Customer Details  ${cpf_formatado}
+    Click Remove Customer
+
+E esse cliente não deve aparecer na lista
+    Wait Until Page Does Not Contain       ${cpf_formatado}
