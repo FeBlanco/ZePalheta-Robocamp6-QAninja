@@ -1,7 +1,7 @@
 ***Settings***
 Documentation           Cadastro de Clientes
 
-Resource        ../resources/base.robot
+Resource        ../../resources/base.robot
 
 Test Setup      Login Sesions
 Test Teardown   Finish Session
