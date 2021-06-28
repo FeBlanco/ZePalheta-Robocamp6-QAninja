@@ -1,0 +1,40 @@
+{
+    "data": [
+        {
+            "id": "13c28eab-0761-4e9e-93f1-d65517e521b6",
+            "name": "Fernando Papito",
+            "cpf": "000.000.141-41",
+            "phone_number": "(11) 9.9999-9999",
+            "address": "Rua 8",
+            "created_at": "2021-06-27T22:59:58.707Z",
+            "updated_at": "2021-06-27T22:59:58.707Z"
+        },
+        {
+            "id": "e46c2eac-a949-4d39-a4a4-ddc1a62a79a9",
+            "name": "Bon Jovi",
+            "cpf": "000.000.014-06",
+            "phone_number": "(11) 9.9999-9999",
+            "address": "Rua dos Bugs, 1000",
+            "created_at": "2021-06-26T03:04:52.090Z",
+            "updated_at": "2021-06-26T03:04:52.090Z"
+        },
+        {
+            "id": "c1661f2c-fb29-4102-86b2-5c8545589198",
+            "name": "Adrian Smith",
+            "cpf": "00000001407",
+            "phone_number": "11999999991",
+            "address": "Rua dos Bugs, 2000",
+            "created_at": "2021-06-25T03:07:29.923Z",
+            "updated_at": "2021-06-25T03:07:29.923Z"
+        },
+        {
+            "id": "90347f96-9a14-4ca7-a6e0-4c2b31bf78b8",
+            "name": "Will Smith",
+            "cpf": "00000001441",
+            "phone_number": "11999999991",
+            "address": "Rua dos Bugs, 2000",
+            "created_at": "2021-06-25T02:09:33.227Z",
+            "updated_at": "2021-06-25T02:09:33.227Z"
+        }
+    ]
+}

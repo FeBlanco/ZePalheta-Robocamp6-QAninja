@@ -1,20 +1,21 @@
 *** Settings ***                                                                                       
 
-Resource        ../../resources/services.robot
+Resource        ../../../resources/services.robot
+Library         OperatingSystem
 
 ***Test Cases***
 New Customer
-    
-    &{payload}=         Create Dictionary     name=Fernando Papito    cpf=000.000.141-41    address=Rua 8   phone_number=11999999999 
+                        
+    ${payload}          Get Json              customers/Fernando.json
 
-    Delete Customers    ${payload['cpf']}
+    Delete Customer     ${payload['cpf']}
     ${resp}=            Post Customer         ${payload}
 
     Status Should Be    200                   ${resp}
 
 Name is required
 
-    &{payload}=         Create Dictionary     cpf=000.000.141-41    address=Rua 8   phone_number=11999999999
+    ${payload}          Get Json              customers/no_name.json
     ${resp}=            Post Customer         ${payload}
 
     Status Should Be     400         ${resp}
@@ -22,7 +23,7 @@ Name is required
 
 Cpf is required
 
-    &{payload}=         Create Dictionary     name=Felipe    address=Rua 8   phone_number=11999999999
+    ${payload}          Get Json              customers/no_cpf.json
     ${resp}=            Post Customer         ${payload}
 
     Status Should Be     400         ${resp}
@@ -30,7 +31,7 @@ Cpf is required
 
 Address is required
 
-    &{payload}=         Create Dictionary     name=Felipe       cpf=000.000.141-41   phone_number=11999999999
+    ${payload}          Get Json              customers/no_address.json
     ${resp}=            Post Customer         ${payload}
 
     Status Should Be     400         ${resp}
@@ -38,7 +39,7 @@ Address is required
 
 Phone Number is required
     
-    &{payload}=         Create Dictionary     name=Felipe       cpf=000.000.141-41    address=Rua 8
+    ${payload}          Get Json              customers/no_phone_number.json
     ${resp}=            Post Customer         ${payload}
 
     Status Should Be     400         ${resp}
